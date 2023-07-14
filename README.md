@@ -1,4 +1,5 @@
 # skeleton.lv2
+
 Quick-start template for LV2 plugins with GUI
 
 ## Description
@@ -17,6 +18,21 @@ The programmer can begin programming GUI using one of the examples source files
 provided for each toolkit.
 
 ## How to use
+
+install dependencies (glew, mesa-libgl, and lv2 devel)
+
+on fedora:
+
+```
+sudo dnf install glew-devel glew libGLEW mesa-libGL-devel lv2 lv2-c++-tools lv2-c++-tools-devel lv2-devel
+```
+
+pull in submodules
+
+```
+git submodule update ../thirdparty/pugl ../thirdparty/nanovg
+git submodule update --init ../thirdparty/pugl ../thirdparty/nanovg
+```
 
 The source code is compiled using [CMake](https://cmake.org) commands.
 
@@ -66,10 +82,11 @@ They link the dependencies and rename the target according to LV2 conventions.
     add_lv2_tkui    # Tcl/Tk
 
 In the manifest of your UI, you want to make sure that its **uiclass** matches the UI toolkit used.
-If you develop with OpenGL or native toolkits, use **LV2_UI__PlatformSpecificUI** which is defined as a synonym for the platform's native window system.
+If you develop with OpenGL or native toolkits, use **LV2_UI\_\_PlatformSpecificUI** which is defined as a synonym for the platform's native window system.
 
 Furthermore, if you use the native window system, the UI runs in LV2's idle interface callback.
 In order to get an idle callback, do these three things:
+
 - request the **ui:idleInterface** feature;
 - declare extension data for **ui:idleInterface**;
 - provide the idle interface in the plugin; this is done by returning true in **UI::needs_idle_callback**.
